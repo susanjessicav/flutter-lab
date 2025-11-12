@@ -1,0 +1,80 @@
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+
+void main()
+{
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget
+{
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context)
+  {
+    return MaterialApp(
+      title:"ex2",
+      home:Scaffold(
+        appBar: AppBar(
+          title:Text("flower shop !",style: TextStyle(fontSize:20,letterSpacing:12),
+          ),
+          backgroundColor:Colors.amber[100]
+        ),
+        body:ListView(
+          children:[
+            MyList(flowername:'roses',imgurl:'assets/images/img1.jpg',price:200),
+            MyList(flowername:'lilies',imgurl:'assets/images/img2.jpg',price:300),
+            MyList(flowername:' sunflowers',imgurl:'assets/images/img3.jpg',price:500),
+          
+          ]
+        )
+      )
+    );
+  }
+}
+
+class MyList extends StatelessWidget{
+  final String flowername , imgurl;
+  final double price;
+  MyList({super.key,required this.flowername,required this.imgurl,required this.price});
+  final inrFormat = NumberFormat.currency(locale:"en_IN",decimalDigits: 2,symbol:'₹');
+
+  @override
+  Widget build(BuildContext context)
+  {
+    return Card(
+      shape:RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20),
+        side:BorderSide(color: Colors.grey.shade100,width:0.5)
+        ),
+      elevation:1,
+      color:Colors.grey[50],
+      child: Row(
+        children: [
+          Container(
+            padding:EdgeInsets.all(20),
+            color:Colors.grey.shade200,
+            height:200,
+            width:200,
+            child:Image.asset(imgurl,width:150,height:150)
+            ),
+          Column(
+            children: [
+              Text(flowername,style:TextStyle(fontSize:20,fontWeight: FontWeight.w500)),
+              SizedBox(height:20,),
+              Text(inrFormat.format(price)),
+              SizedBox(height:20,width:10,),
+              ElevatedButton(
+                onPressed:(){},
+                style:ElevatedButton.styleFrom(
+                backgroundColor:Colors.pink,
+                foregroundColor:Colors.white
+                ),
+                child:Text("Buy!")
+              )
+            ],)
+        ],)
+        );
+  }
+}
