@@ -1,0 +1,71 @@
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+
+void main()
+{
+  runApp(MyApp());
+}
+
+class Product{
+  String name;
+  double price;
+  int quantity;
+  Product({required this.name,required this.price,required this.quantity});
+}
+
+
+class MyApp extends StatelessWidget
+{
+  MyApp({super.key});
+  final List<Product> productlist = [
+    Product(name: "Roses", price: 200, quantity: 50),
+    Product(name:"Lilies", price: 300, quantity: 70),
+    Product(name: "Sunflowers ", price: 500, quantity: 20)
+  ];
+
+  @override
+  Widget build(BuildContext context)
+  {
+    return MaterialApp(
+      title:"ex3",
+      home:Scaffold(
+        appBar: AppBar(
+          title:Text("flower shop ! - List View",style: TextStyle(fontSize:20,letterSpacing:12),
+          ),
+          backgroundColor:Colors.amber[100]
+        ),
+        body:ListView.builder(
+          itemCount: productlist.length,
+          itemBuilder: (context, index){
+            final product = productlist[index];
+            return Column(children: [
+              ListTile(
+                leading:CircleAvatar(
+                  child:Text(product.name[0])
+                  ),
+                  title:Text(product.name),
+                  subtitle: Text("${product.price},Quantity:${product.quantity}"),
+                  trailing: TextButton(
+                    onPressed:(){
+                      showDialog(
+                        context: context, 
+                        builder: (context)=> AlertDialog(
+                          title: Text("PRODUCT ORDERED"),
+                          content: Text("You ordered ${product.name} !"),
+                          actions:[
+                            TextButton(
+                              onPressed: ()=>Navigator.pop(context),
+                              child:Text("OK"))
+                          ]
+                        ));
+                    },
+                    child: Text("order!")
+                    )
+                )
+            ],);
+          },
+        )
+      )
+    );
+  }
+}
